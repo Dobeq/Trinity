@@ -1,5 +1,5 @@
 relics.txt
-whm.sln
-__pycache/*
+wmh.sln
+*/__pycache__/*
 *.pyproj
 .vs/*
