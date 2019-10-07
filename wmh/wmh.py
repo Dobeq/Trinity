@@ -57,7 +57,7 @@ def getItem(item, head, header):
     thing = request.json()['payload']['orders']
     filtered = list(filter(lambda x: x['order_type']=='buy', thing))
     filtered = list(filter(lambda x: timeDiff(ISOtoPy(x['creation_date']), time.gmtime())<=1, filtered))
-    filtered = list(filter(lambda x: x['id'] != '5d975f47a7a6210668621030', filtered))
+    filtered = list(filter(lambda x: x['region'] == 'en', filtered))
     filtered.sort(key=lambda y: y['platinum'], reverse=True)
     if len(filtered) >= 1:
         return int(filtered[0]['platinum'])
@@ -127,5 +127,5 @@ if __name__ == "__main__":
     head = 'https://api.warframe.market/v1/'
     header = {'platform':'pc', 'language':'en'}
     setGlobals()
-    relics = scrape()
+    relics = scrapeRelicRewards()
     prices = checkPrice(relics, head, header)
