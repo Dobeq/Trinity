@@ -117,9 +117,12 @@ def checkPrice(relics, head, header):
         output.append(info)
     output.sort(key=lambda x:x['ev'][0], reverse=True)
     with open('relics.txt', 'w+') as f:
+        jitems = json.dumps(items)
+        f.write(jitems + '\n')
         for line in output:
             jline = json.dumps(line)
             f.write(jline + '\n')
+        f.flush()
     return output
 
 
@@ -127,5 +130,10 @@ if __name__ == "__main__":
     head = 'https://api.warframe.market/v1/'
     header = {'platform':'pc', 'language':'en'}
     setGlobals()
-    relics = scrapeRelicRewards()
-    prices = checkPrice(relics, head, header)
+    scan = input('rescan? [y]/n ' + '\n')
+    if scan == 'y':
+        relics = scrapeRelicRewards()
+        prices = checkPrice(relics, head, header)
+    missions = input('recheck missions? [y]/n ' + '\n')
+    if missions == 'y':
+        scrapeMissionRewards()
